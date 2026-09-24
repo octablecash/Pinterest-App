@@ -9,9 +9,11 @@
   (lokal optional über eine `.env`-Datei, die per `.gitignore` ausgeschlossen ist).
 - Vor jedem Commit prüfen, dass keine Tokens/Secrets im Diff stehen.
 
-## ⚠️ GitHub-Pages-Dateien nicht anfassen
-`website.html` und `datenschutz.html` sind im Pinterest-Developer-Formular hinterlegt
-und dürfen weder verändert noch verschoben werden.
+## ⚠️ GitHub-Pages-Dateien nicht umbenennen/verschieben
+`website.html` und `datenschutz.html` sind im Pinterest-Developer-Formular hinterlegt.
+Dateinamen und Pfade müssen gleich bleiben. Inhaltliche Änderungen nur nach Rücksprache mit
+dem Nutzer (im Sept. 2026 mit Freigabe überarbeitet: App-Name, Verantwortlicher, Kontakt,
+vollständige DSGVO-Datenschutzerklärung).
 
 ## Ziel
 Automatisiertes Erstellen von Pins über die offizielle Pinterest API v5 (kein Browser-Scraping,
@@ -24,6 +26,8 @@ Board hochgeladen werden.
 - Neue Gmail-Adresse extra für dieses Projekt angelegt
 
 ## Developer-App
+- App-Name: **Pinautomatisierung**
+- Verantwortlicher / Kontakt (öffentlich auf den Pages): Max Locker, pintillmio@gmx.de
 - Registriert auf developers.pinterest.com
 - App-Zweck: "Automatisiertes Speichern von Design-Recherche-Bildern auf eigene Boards für
   persönliche Nutzung"
@@ -37,7 +41,9 @@ Gehostet via GitHub Pages, Repo: octablecash/Pinterest-App
 - Datenschutz: https://octablecash.github.io/Pinterest-App/datenschutz.html
 
 ## Status
-- App-Registrierung läuft / ggf. Standard-Access-Antrag gestellt (Freigabe kann dauern)
+- Erster Antrag: **Trial Access verweigert** (wahrscheinlich wegen Platzhalter-Website und
+  unvollständiger Datenschutzerklärung). Seiten überarbeitet → Antrag neu stellen.
+- Ohne Trial Access gibt es keinerlei API-Zugriff (auch kein OAuth-Test).
 - App ID / App Secret liegen dem Nutzer vor – nur als Umgebungsvariablen, nie im Repo
 
 ## Nächste Schritte

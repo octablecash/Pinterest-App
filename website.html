@@ -3,55 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Studio – Projekt</title>
+<title>Pinautomatisierung</title>
+<meta name="description" content="Pinautomatisierung – persönliches Tool, das selbst ausgewählte Bilder über die offizielle Pinterest API v5 als Pins auf die eigenen Pinnwände speichert.">
 <style>
-  :root {
-    --bg: #fafafa;
-    --fg: #1a1a1a;
-    --accent: #e0245e;
-  }
+  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #555; --accent: #e0245e; --line: #e2e2e2; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #121212; --fg: #f2f2f2; }
+    :root:not([data-theme="light"]) { --bg: #121212; --fg: #f2f2f2; --muted: #b0b0b0; --line: #2c2c2c; }
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  html, body { margin: 0; }
   body {
     background: var(--bg);
     color: var(--fg);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    padding-top: calc(40px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
   }
-  .card {
-    max-width: 480px;
-    text-align: center;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    width: 96px;
-    margin: 0 auto 24px;
-  }
-  .grid div { aspect-ratio: 1; border-radius: 6px; background: #e5e5e5; }
-  .grid div:nth-child(5) { background: var(--accent); }
-  h1 { font-size: 1.4rem; margin-bottom: 8px; }
-  p { line-height: 1.5; color: #777; font-size: 0.95rem; }
+  h1 { font-size: 1.7rem; margin: 0 0 6px; }
+  .tagline { color: var(--muted); margin: 0 0 32px; }
+  h2 { font-size: 1.1rem; margin-top: 32px; }
+  p, li { color: var(--muted); }
+  ol, ul { padding-left: 1.3rem; }
+  code { font-size: 0.9em; }
+  a { color: var(--accent); }
+  footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
 </style>
 </head>
 <body>
-  <div class="card">
-    <div class="grid">
-      <div></div><div></div><div></div>
-      <div></div><div></div><div></div>
-      <div></div><div></div><div></div>
-    </div>
-    <h1>Studio Projekt</h1>
-    <p>Persönliches Recherche- und Moodboard-Tool auf Basis eines modularen Rastersystems. Wird zur privaten Organisation von Design-Inspiration verwendet.</p>
-  </div>
+  <h1>Pinautomatisierung</h1>
+  <p class="tagline">Ein persönliches, nicht-kommerzielles Tool zum Speichern von Design-Recherche auf meinen eigenen Pinterest-Pinnwänden.</p>
+
+  <h2>Was die App macht</h2>
+  <p>Pinautomatisierung ist ein kleines Skript, das ich (Max Locker) für meine eigene Design-Recherche nutze. Ich wähle Bilder, die mir gefallen, selbst aus. Die App speichert sie dann über die offizielle Pinterest API v5 als Pins auf einer meiner eigenen Pinnwände. Die Quell-Webseite wird dabei als Link im Pin gespeichert, damit Urheber und Herkunft erhalten bleiben.</p>
+
+  <h2>So funktioniert es</h2>
+  <ol>
+    <li>Ich melde mich einmalig über den offiziellen Pinterest-OAuth-Login an und erteile der App Zugriff auf mein Konto.</li>
+    <li>Die App liest meine eigenen Pinnwände aus, damit ich das Ziel-Board auswählen kann.</li>
+    <li>Für jedes von mir ausgewählte Bild wird ein Pin mit Bild, Beschreibung und Link zur Quelle erstellt.</li>
+  </ol>
+
+  <h2>Was die App nicht macht</h2>
+  <ul>
+    <li>Kein Massen-Posten, kein Spam, keine Interaktion mit Pins oder Konten anderer Nutzer*innen.</li>
+    <li>Kein Zugriff auf Daten anderer Pinterest-Konten – ausschließlich auf mein eigenes Konto.</li>
+    <li>Kein Browser-Scraping von Pinterest, keine Weitergabe oder Verkauf von Daten.</li>
+  </ul>
+
+  <h2>Verwendete Berechtigungen</h2>
+  <ul>
+    <li><code>boards:read</code> – eigene Pinnwände auflisten, um das Ziel-Board zu wählen</li>
+    <li><code>pins:read</code> – eigene Pins lesen, z. B. um Duplikate zu vermeiden</li>
+    <li><code>pins:write</code> – neue Pins auf eigenen Pinnwänden erstellen</li>
+  </ul>
+
+  <h2>Kontakt</h2>
+  <p>Max Locker<br>E-Mail: <a href="mailto:pintillmio@gmx.de">pintillmio@gmx.de</a></p>
+  <p><a href="datenschutz.html">Datenschutzerklärung</a></p>
+
+  <footer>Pinautomatisierung ist ein privates Projekt und steht in keiner Verbindung zu Pinterest, Inc. „Pinterest“ ist eine Marke von Pinterest, Inc.</footer>
 </body>
 </html>

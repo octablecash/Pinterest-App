@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Datenschutzerklärung</title>
+<title>Datenschutzerklärung – Pinautomatisierung</title>
 <style>
-  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #666; }
+  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #555; --accent: #e0245e; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #121212; --fg: #f2f2f2; --muted: #aaa; }
+    :root:not([data-theme="light"]) { --bg: #121212; --fg: #f2f2f2; --muted: #b0b0b0; }
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  html, body { margin: 0; }
   body {
     background: var(--bg);
     color: var(--fg);
@@ -18,36 +18,50 @@
     padding: 32px 20px;
     padding-top: calc(32px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
-    max-width: 640px;
+    max-width: 680px;
     margin: 0 auto;
     line-height: 1.6;
   }
   h1 { font-size: 1.5rem; margin-bottom: 4px; }
   .updated { color: var(--muted); font-size: 0.85rem; margin-bottom: 32px; }
   h2 { font-size: 1.1rem; margin-top: 28px; }
-  p { color: var(--muted); }
+  p, li { color: var(--muted); }
+  ul { padding-left: 1.3rem; }
+  a { color: var(--accent); }
 </style>
 </head>
 <body>
   <h1>Datenschutzerklärung</h1>
-  <div class="updated">Stand: September 2026</div>
+  <div class="updated">Pinautomatisierung · Stand: September 2026</div>
 
   <h2>1. Verantwortlicher</h2>
-  <p>Diese Anwendung ist ein privates, nicht-kommerzielles Tool zur persönlichen Organisation von Design-Recherche über die Pinterest-API. Es wird ausschließlich vom Kontoinhaber selbst genutzt.</p>
+  <p>Max Locker<br>E-Mail: <a href="mailto:pintillmio@gmx.de">pintillmio@gmx.de</a></p>
+  <p>Pinautomatisierung ist ein privates, nicht-kommerzielles Tool, das ausschließlich vom Verantwortlichen für sein eigenes Pinterest-Konto genutzt wird.</p>
 
   <h2>2. Welche Daten verarbeitet werden</h2>
-  <p>Die Anwendung greift ausschließlich auf die Pins und Pinnwände des eigenen, authentifizierten Pinterest-Kontos zu. Es werden keine Daten von anderen Pinterest-Nutzer*innen gelesen, gespeichert oder weitergegeben.</p>
+  <ul>
+    <li><strong>OAuth-Zugangsdaten</strong> (Access Token, Refresh Token), die Pinterest nach dem Login ausstellt.</li>
+    <li><strong>Pinnwand-Daten</strong> des eigenen Kontos (Name und ID der Pinnwände), um das Ziel-Board auszuwählen.</li>
+    <li><strong>Pin-Daten</strong> des eigenen Kontos (Bild-URL, Beschreibung, Quell-Link) beim Erstellen neuer Pins.</li>
+  </ul>
+  <p>Es werden keine Daten anderer Pinterest-Nutzer*innen gelesen, gespeichert oder verarbeitet. Die App erhebt keine Analyse- oder Tracking-Daten und setzt keine Cookies.</p>
 
-  <h2>3. Zweck der Verarbeitung</h2>
-  <p>Die verarbeiteten Daten (Bild-URLs, Board-Zuordnungen) dienen ausschließlich dem automatisierten Erstellen eigener Pins auf eigenen Pinnwänden.</p>
+  <h2>3. Zweck und Rechtsgrundlage</h2>
+  <p>Die Daten werden ausschließlich verarbeitet, um auf Wunsch des Kontoinhabers Pins auf seinen eigenen Pinnwänden zu erstellen. Rechtsgrundlage ist die Einwilligung, die beim Pinterest-Login erteilt wird (Art. 6 Abs. 1 lit. a DSGVO). Da es sich um eine rein persönliche Nutzung handelt, findet keine Verarbeitung zu kommerziellen Zwecken statt.</p>
 
-  <h2>4. Weitergabe an Dritte</h2>
-  <p>Es findet keine Weitergabe von Daten an Dritte statt. Die Kommunikation erfolgt ausschließlich zwischen dieser Anwendung und der offiziellen Pinterest-API.</p>
+  <h2>4. Speicherung und Speicherdauer</h2>
+  <p>Zugangsdaten werden ausschließlich lokal auf dem Rechner des Kontoinhabers gespeichert. Sie werden weder auf einem Server abgelegt noch veröffentlicht. Die Tokens bleiben nur so lange gespeichert, wie die App genutzt wird, und werden gelöscht, sobald der Zugriff widerrufen oder die App nicht mehr verwendet wird. Pinnwand- und Pin-Daten werden nur für die Dauer der jeweiligen Anfrage verarbeitet und nicht dauerhaft gespeichert.</p>
 
-  <h2>5. Speicherung</h2>
-  <p>Zugangsdaten (OAuth-Token) werden lokal beim Kontoinhaber gespeichert und nicht an Dritte übermittelt.</p>
+  <h2>5. Weitergabe an Dritte</h2>
+  <p>Es findet keine Weitergabe von Daten an Dritte statt. Die Kommunikation erfolgt ausschließlich zwischen der App und der offiziellen Pinterest API (Pinterest Europe Ltd. bzw. Pinterest, Inc.). Für die Verarbeitung durch Pinterest gilt die <a href="https://policy.pinterest.com/de/privacy-policy" rel="noopener">Datenschutzrichtlinie von Pinterest</a>.</p>
 
-  <h2>6. Kontakt</h2>
-  <p>Bei Fragen zu dieser Datenschutzerklärung wende dich an den Kontoinhaber direkt.</p>
+  <h2>6. Zugriff widerrufen und Daten löschen</h2>
+  <p>Der Zugriff der App kann jederzeit in den Pinterest-Einstellungen unter „Sicherheit und Anmeldung“ bzw. „Apps“ entfernt werden. Damit werden die ausgestellten Tokens ungültig. Eine Löschung der lokal gespeicherten Daten kann zusätzlich formlos per E-Mail an <a href="mailto:pintillmio@gmx.de">pintillmio@gmx.de</a> verlangt werden; sie erfolgt unverzüglich.</p>
+
+  <h2>7. Deine Rechte</h2>
+  <p>Du hast nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie auf Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft. Außerdem hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.</p>
+
+  <h2>8. Kontakt</h2>
+  <p>Bei Fragen zum Datenschutz: Max Locker, <a href="mailto:pintillmio@gmx.de">pintillmio@gmx.de</a></p>
 </body>
 </html>
