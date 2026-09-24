@@ -27,6 +27,8 @@ Board hochgeladen werden.
 
 ## Developer-App
 - App-Name: **Pinautomatisierung**
+- Themen: Design, Interior, Möbel, Fashion
+- Logo: `logo.svg` (Quelle) + `logo.png` (512×512, App-Icon) – Moodboard mit Sessel, Kleid, Lampe, Tasche
 - Verantwortlicher / Kontakt (öffentlich auf den Pages): Max Locker, pintillmio@gmx.de
 - Registriert auf developers.pinterest.com
 - App-Zweck: "Automatisiertes Speichern von Design-Recherche-Bildern auf eigene Boards für
