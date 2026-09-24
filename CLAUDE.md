@@ -43,12 +43,19 @@ Gehostet via GitHub Pages, Repo: octablecash/Pinterest-App
 - Datenschutz: https://octablecash.github.io/Pinterest-App/datenschutz.html
 
 ## Status
-- Erster Antrag: **Trial Access verweigert** (wahrscheinlich wegen Platzhalter-Website und
-  unvollständiger Datenschutzerklärung). Seiten überarbeitet → Antrag neu stellen.
-- Ohne Trial Access gibt es keinerlei API-Zugriff (auch kein OAuth-Test).
+- Erster Antrag abgelehnt; nach Überarbeitung der Seiten ist die App **Moodloft freigegeben**
+  (App-ID 1615269, Umgebung „Produktion begrenzt“ = vermutlich Trial Access).
+- Code in `moodloft/` (Python, CLI `python -m moodloft ...`), Anleitung in `README.md`.
 - App ID / App Secret liegen dem Nutzer vor – nur als Umgebungsvariablen, nie im Repo
 
-## Nächste Schritte
+## Code-Struktur
+- `moodloft/config.py` – .env/Umgebungsvariablen, `save_env` schreibt Tokens lokal
+- `moodloft/auth.py` – OAuth-Login über lokalen Callback-Server + Token-Refresh
+- `moodloft/api.py` – `GET /v5/boards`, `POST /v5/pins`, Fehlerhinweise (401/403/429)
+- `moodloft/extract.py` – Hauptbild (og:image …) + Titel/Beschreibung aus Webseiten
+- `moodloft/__main__.py` – CLI: `login`, `boards`, `pin`, `from-file`
+
+## Ursprüngliche Schritte (umgesetzt)
 1. OAuth 2.0 Flow (Authorization Code Grant); Redirect URI wie im Pinterest-Formular eingetragen
    (z. B. `http://localhost:8080/callback`) – der erste Login muss lokal beim Nutzer laufen
 2. Access Token + Refresh Token sicher lokal speichern (`.env`, nicht committen)

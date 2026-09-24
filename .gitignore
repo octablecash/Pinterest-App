@@ -19,3 +19,6 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+
+# Lokales Protokoll bereits gepinnter Links
+.moodloft_posted.json
