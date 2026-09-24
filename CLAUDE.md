@@ -26,7 +26,7 @@ Board hochgeladen werden.
 - Neue Gmail-Adresse extra für dieses Projekt angelegt
 
 ## Developer-App
-- App-Name: **Pinautomatisierung**
+- App-Name: **Moodloft** (vorher „Pinautomatisierung“ – Name war bei Pinterest bereits vergeben)
 - Themen: Design, Interior, Möbel, Fashion
 - Logo: `logo.svg` (Quelle) + `logo.png` (512×512, App-Icon) – Moodboard mit Sessel, Kleid, Lampe, Tasche
 - Verantwortlicher / Kontakt (öffentlich auf den Pages): Max Locker, pintillmio@gmx.de
