@@ -1,0 +1,21 @@
+# Secrets & Tokens – niemals committen (Repo ist öffentlich)
+.env
+.env.*
+!.env.example
+*.token
+*token*.json
+tokens.json
+.pinterest_token*
+credentials*.json
+secrets*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
