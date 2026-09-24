@@ -53,7 +53,15 @@ Gehostet via GitHub Pages, Repo: octablecash/Pinterest-App
 - `moodloft/auth.py` – OAuth-Login über lokalen Callback-Server + Token-Refresh
 - `moodloft/api.py` – `GET /v5/boards`, `POST /v5/pins`, Fehlerhinweise (401/403/429)
 - `moodloft/extract.py` – Hauptbild (og:image …) + Titel/Beschreibung aus Webseiten
-- `moodloft/__main__.py` – CLI: `login`, `boards`, `pin`, `from-file`
+- `moodloft/pinqueue.py` – Warteschlange (.moodloft_queue.json) mit Tageslimit + Mindestabstand
+- `moodloft/server.py` + `ui.html` – lokale Browser-Oberfläche (`python -m moodloft ui`, 127.0.0.1:8765):
+  Links → Bilder auswählen → Warteschlange / sofort pinnen; Hintergrund-Worker arbeitet Queue ab
+- `moodloft/__main__.py` – CLI: `ui`, `login`, `boards`, `pin`, `add`, `from-file`, `queue`, `run`
+- `VIDEO.md` – Drehbuch für das Demo-Video (Standard-Access-Antrag)
+
+## Nutzungsrichtlinie (wichtig für Pinterest)
+- Im Antrag/auf der Website zugesagt: persönlich, Bilder selbst ausgewählt, kein Massen-Posten,
+  immer mit Quell-Link. Tageslimit (Standard 15/Tag, 20 min Abstand) nicht aushebeln.
 
 ## Ursprüngliche Schritte (umgesetzt)
 1. OAuth 2.0 Flow (Authorization Code Grant); Redirect URI wie im Pinterest-Formular eingetragen

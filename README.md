@@ -32,18 +32,43 @@ Website: https://octablecash.github.io/Pinterest-App/website.html
 
 ## Benutzung
 
+### Oberfläche (empfohlen)
+
 ```
-python -m moodloft boards                         # eigene Boards mit ID anzeigen
-python -m moodloft pin https://beispiel.de/sessel --board BOARD_ID
-python -m moodloft from-file urls.txt --board BOARD_ID
+python -m moodloft ui
 ```
 
-- Tipp: `PINTEREST_BOARD_ID=...` in die `.env` eintragen, dann kann `--board` entfallen.
-- `pin` akzeptiert **Webseiten-Links** (das Hauptbild der Seite wird genommen, die Seite wird als
-  Quelle verlinkt) und **direkte Bild-Links**.
-- `urls.txt`: eine URL pro Zeile, Zeilen mit `#` werden ignoriert.
-- Bereits gepinnte URLs werden übersprungen (`--force` pinnt trotzdem).
-- Optional: `--title`, `--description`, `--delay` (Pause zwischen Pins, Standard 3 s).
+Öffnet Moodloft im Browser (läuft nur auf deinem Rechner, `http://127.0.0.1:8765`):
+
+1. Oben rechts das **Board** wählen.
+2. **Links einfügen** (eine Webseite pro Zeile) → **Bilder suchen**.
+3. Die gewünschten Bilder **antippen**, Titel/Beschreibung bei Bedarf anpassen.
+4. **In Warteschlange** – oder **Jetzt pinnen** (erstes Bild sofort, Rest in die Warteschlange).
+
+Solange die Oberfläche offen ist, arbeitet sie die Warteschlange automatisch ab.
+
+### Warteschlange & Tageslimit
+
+Du kannst beliebig viele Bilder vormerken – gepinnt wird **verteilt**: standardmäßig
+höchstens **15 Pins pro Tag** mit mindestens **20 Minuten Abstand**. So wirkt das Konto wie ein
+aktiver Kurator statt wie ein Bot. Anpassbar in der `.env` über `MOODLOFT_DAILY_LIMIT` und
+`MOODLOFT_MIN_GAP_MINUTES`. Bereits gepinnte oder vorgemerkte Bilder werden nicht doppelt
+aufgenommen.
+
+### Kommandozeile
+
+```
+python -m moodloft boards                  # eigene Boards mit ID anzeigen
+python -m moodloft pin <URL>               # einen Pin sofort erstellen
+python -m moodloft add <URL> [<URL> ...]   # Hauptbild(er) in die Warteschlange legen
+python -m moodloft from-file urls.txt      # dito, eine URL pro Zeile (# = Kommentar)
+python -m moodloft queue                   # Warteschlange + Tageslimit anzeigen
+python -m moodloft run --watch             # Warteschlange abarbeiten, bis sie leer ist
+```
+
+- `--board BOARD_ID` wählt das Board; alternativ `PINTEREST_BOARD_ID` in der `.env`.
+- URLs können **Webseiten** (Hauptbild wird genommen, Seite als Quelle verlinkt) oder
+  **direkte Bild-Links** sein. Optional: `--title`, `--description`.
 
 ## Fehler
 
@@ -53,3 +78,4 @@ python -m moodloft from-file urls.txt --board BOARD_ID
 | `HTTP 403` | App darf das (noch) nicht – z. B. nur Trial Access, Scope fehlt oder fremdes Board |
 | `HTTP 429` | Zu viele Anfragen → kurz warten |
 | `Kein Bild gefunden` | Seite hat kein erkennbares Hauptbild → direkten Bild-Link verwenden |
+| `Tageslimit erreicht` | Kein Fehler – die Warteschlange macht morgen weiter |

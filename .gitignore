@@ -21,4 +21,5 @@ venv/
 .vscode/
 
 # Lokales Protokoll bereits gepinnter Links
-.moodloft_posted.json
+.moodloft_queue.json
+.moodloft_queue.tmp

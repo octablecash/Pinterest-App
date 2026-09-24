@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Moodloft</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<style>
+  :root {
+    --bg: #f6f0e6; --card: #fffaf3; --fg: #2e2a26; --muted: #7a7068; --line: #e6dccd;
+    --terra: #c8553d; --sage: #8a9a7b; --mustard: #e9a23b; --blush: #e8b4a0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #1b1916; --card: #24211d; --fg: #f1e8da; --muted: #a89c8f; --line: #3a342d; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: center; gap: 14px; padding: 18px 28px; border-bottom: 1px solid var(--line); background: var(--card); position: sticky; top: 0; z-index: 5; flex-wrap: wrap; }
+  header img { width: 40px; height: 40px; }
+  header h1 { font-size: 1.35rem; margin: 0; letter-spacing: .02em; }
+  .spacer { flex: 1; }
+  .pill { padding: 5px 12px; border-radius: 999px; font-size: .85rem; background: var(--line); }
+  .pill.ok { background: var(--sage); color: #fff; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 20px 120px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin-bottom: 22px; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; }
+  textarea, input, select { width: 100%; font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  textarea { min-height: 96px; resize: vertical; }
+  button { font: inherit; border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer; background: var(--fg); color: var(--bg); }
+  button.terra { background: var(--terra); color: #fff; }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+  button:disabled { opacity: .5; cursor: default; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  .page { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 16px; }
+  .page .src { font-size: .85rem; color: var(--muted); word-break: break-all; }
+  .page .fields { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; margin: 10px 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .tile { position: relative; border-radius: 14px; overflow: hidden; cursor: pointer; background: var(--line); aspect-ratio: 3/4; outline: 3px solid transparent; transition: outline-color .15s, transform .15s; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile.sel { outline-color: var(--terra); transform: scale(.97); }
+  .tile .check { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.85); display: grid; place-items: center; font-weight: 700; color: var(--terra); }
+  .tile:not(.sel) .check { color: transparent; }
+  .error { color: var(--terra); }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 14px 20px; display: none; z-index: 6; }
+  .bar.show { display: block; }
+  .bar .inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .stats { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 12px; }
+  .stat b { display: block; font-size: 1.4rem; }
+  .q { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+  .q img { width: 52px; height: 52px; object-fit: cover; border-radius: 10px; background: var(--line); }
+  .q .t { flex: 1; min-width: 0; }
+  .q .t div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge { font-size: .78rem; padding: 3px 10px; border-radius: 999px; background: var(--line); white-space: nowrap; }
+  .badge.posted { background: var(--sage); color: #fff; }
+  .badge.failed { background: var(--terra); color: #fff; }
+  .badge.queued { background: var(--mustard); color: #2e2a26; }
+  .q button { padding: 6px 12px; font-size: .85rem; }
+  .q a { color: var(--terra); font-size: .9rem; }
+  .login { text-align: center; padding: 40px 20px; }
+  .toast { position: fixed; top: 84px; left: 50%; transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 12px; z-index: 10; display: none; max-width: 90vw; }
+  @media (max-width: 640px) { .page .fields { grid-template-columns: 1fr; } header { padding: 14px 16px; } }
+</style>
+</head>
+<body>
+<header>
+  <img src="/logo.svg" alt="">
+  <h1>Moodloft</h1>
+  <div class="spacer"></div>
+  <span id="conn" class="pill">…</span>
+  <select id="board" style="width:auto;min-width:200px" title="Ziel-Board"></select>
+</header>
+
+<main>
+  <section id="loginBox" class="login" style="display:none">
+    <h2>Mit Pinterest verbinden</h2>
+    <p class="muted">Einmalig anmelden – danach speichert Moodloft deine Auswahl als Pins auf deinen eigenen Boards.</p>
+    <button class="terra" id="loginBtn">Mit Pinterest anmelden</button>
+    <p id="loginMsg" class="muted"></p>
+  </section>
+
+  <div id="app" style="display:none">
+    <section>
+      <h2>1 · Links einfügen</h2>
+      <textarea id="urls" placeholder="Eine Webseite pro Zeile – z. B. Produktseiten von Möbeln oder Fashion"></textarea>
+      <div class="row">
+        <button id="findBtn" class="terra">Bilder suchen</button>
+        <span id="findMsg" class="muted"></span>
+      </div>
+    </section>
+
+    <section id="results" style="display:none">
+      <h2>2 · Bilder auswählen</h2>
+      <p class="muted">Tippe die Bilder an, die du pinnen möchtest. Titel und Beschreibung kannst du pro Seite anpassen; die Webseite wird als Quelle verlinkt.</p>
+      <div id="pages"></div>
+    </section>
+
+    <section>
+      <h2>3 · Warteschlange</h2>
+      <div class="stats">
+        <div class="stat"><b id="sToday">–</b><span class="muted">heute gepinnt</span></div>
+        <div class="stat"><b id="sQueued">–</b><span class="muted">in Warteschlange</span></div>
+        <div class="stat"><b id="sNext">–</b><span class="muted">nächster Pin</span></div>
+      </div>
+      <label class="muted"><input type="checkbox" id="auto" style="width:auto"> Warteschlange automatisch abarbeiten, solange Moodloft geöffnet ist</label>
+      <p id="workerErr" class="error"></p>
+      <div id="queue"></div>
+    </section>
+  </div>
+</main>
+
+<div class="bar" id="bar"><div class="inner">
+  <b id="selCount">0 ausgewählt</b>
+  <div class="spacer"></div>
+  <button class="ghost" id="clearBtn">Auswahl leeren</button>
+  <button id="queueBtn">In Warteschlange</button>
+  <button class="terra" id="nowBtn" title="Erstes Bild sofort pinnen, den Rest in die Warteschlange">Jetzt pinnen</button>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const selected = new Map(); // image_url -> {image_url, link, pageIdx}
+let pages = [];
+
+function el(tag, attrs = {}, ...children) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v; else if (k.startsWith("on")) e[k] = v; else e.setAttribute(k, v);
+  }
+  for (const c of children) if (c != null) e.append(c);
+  return e;
+}
+async function api(path, body) {
+  const r = await fetch(path, body === undefined ? {} : { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || r.statusText);
+  return data;
+}
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.style.display = "block";
+  clearTimeout(t._h); t._h = setTimeout(() => (t.style.display = "none"), 4500);
+}
+const time = (iso) => iso ? new Date(iso).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }) : "–";
+
+async function refreshStatus() {
+  const s = await api("/api/status");
+  $("conn").textContent = s.logged_in ? "Mit Pinterest verbunden" : "Nicht verbunden";
+  $("conn").className = "pill" + (s.logged_in ? " ok" : "");
+  $("loginBox").style.display = s.logged_in ? "none" : "block";
+  $("app").style.display = s.logged_in ? "block" : "none";
+  $("board").style.display = s.logged_in ? "" : "none";
+  $("loginMsg").textContent = s.login === "pending" ? "Bitte im geöffneten Pinterest-Fenster auf „Zulassen“ tippen …" : (s.login_error || "");
+  $("auto").checked = s.auto;
+  $("workerErr").textContent = s.worker_error || "";
+  const st = s.stats;
+  $("sToday").textContent = `${st.posted_today} / ${st.daily_limit}`;
+  $("sQueued").textContent = st.queued;
+  $("sNext").textContent = st.queued ? (st.remaining_today ? time(st.next_possible_at) : "morgen") : "–";
+  if (s.logged_in && !$("board").options.length) loadBoards(s.default_board);
+  return s;
+}
+
+async function loadBoards(def) {
+  try {
+    const { boards } = await api("/api/boards");
+    const sel = $("board"); sel.innerHTML = "";
+    sel.append(el("option", { value: "" }, "Board wählen …"));
+    for (const b of boards) sel.append(el("option", { value: b.id }, b.name + (b.privacy && b.privacy !== "PUBLIC" ? " (privat)" : "")));
+    let saved = null; try { saved = localStorage.getItem("moodloft.board"); } catch {}
+    sel.value = [saved, def].find((v) => v && boards.some((b) => b.id === v)) || "";
+  } catch (e) { toast("Boards konnten nicht geladen werden: " + e.message); }
+}
+$("board").onchange = () => { try { localStorage.setItem("moodloft.board", $("board").value); } catch {} };
+
+async function refreshQueue() {
+  const { items } = await api("/api/queue");
+  const box = $("queue"); box.innerHTML = "";
+  if (!items.length) { box.append(el("p", { class: "muted" }, "Noch nichts vorgemerkt.")); return; }
+  const label = { queued: "wartet", posted: "gepinnt", failed: "Fehler" };
+  for (const i of items.slice(0, 60)) {
+    const actions = [];
+    if (i.status === "posted" && i.pin_id) actions.push(el("a", { href: `https://www.pinterest.com/pin/${i.pin_id}/`, target: "_blank", rel: "noopener" }, "ansehen"));
+    if (i.status === "failed") actions.push(el("button", { class: "ghost", onclick: () => api("/api/queue/retry", { id: i.id }).then(refreshAll) }, "nochmal"));
+    if (i.status !== "posted") actions.push(el("button", { class: "ghost", onclick: () => api("/api/queue/remove", { id: i.id }).then(refreshAll) }, "entfernen"));
+    box.append(el("div", { class: "q" },
+      el("img", { src: i.image_url, alt: "", loading: "lazy" }),
+      el("div", { class: "t" },
+        el("div", {}, i.title || "(ohne Titel)"),
+        el("div", { class: "muted" }, i.status === "failed" ? i.error : (i.link || i.image_url))),
+      el("span", { class: "badge " + i.status }, label[i.status] + (i.posted_at ? " " + time(i.posted_at) : "")),
+      ...actions));
+  }
+}
+const refreshAll = () => Promise.all([refreshStatus(), refreshQueue()]).catch((e) => toast(e.message));
+
+$("loginBtn").onclick = async () => { await api("/api/login", {}); refreshStatus(); };
+$("auto").onchange = () => api("/api/auto", { auto: $("auto").checked });
+
+$("findBtn").onclick = async () => {
+  const urls = $("urls").value.split(/\s+/).filter((u) => u.startsWith("http"));
+  if (!urls.length) return toast("Bitte mindestens einen Link einfügen.");
+  $("findBtn").disabled = true; $("findMsg").textContent = `Durchsuche ${urls.length} Seite(n) …`;
+  try {
+    pages = (await api("/api/extract", { urls })).pages;
+    renderPages();
+    const n = pages.reduce((a, p) => a + p.images.length, 0);
+    $("findMsg").textContent = `${n} Bilder gefunden.`;
+  } catch (e) { $("findMsg").textContent = ""; toast(e.message); }
+  finally { $("findBtn").disabled = false; }
+};
+
+function renderPages() {
+  selected.clear(); updateBar();
+  const box = $("pages"); box.innerHTML = "";
+  $("results").style.display = pages.length ? "block" : "none";
+  pages.forEach((p, idx) => {
+    const grid = el("div", { class: "grid" });
+    for (const src of p.images) {
+      const tile = el("div", { class: "tile", title: "Auswählen" }, el("img", { src, alt: "", loading: "lazy", onerror: function () { tile.remove(); } }), el("span", { class: "check" }, "✓"));
+      tile.onclick = () => {
+        if (selected.has(src)) { selected.delete(src); tile.classList.remove("sel"); }
+        else { selected.set(src, { image_url: src, link: p.link, pageIdx: idx }); tile.classList.add("sel"); }
+        updateBar();
+      };
+      grid.append(tile);
+    }
+    box.append(el("div", { class: "page" },
+      el("div", { class: "src" }, p.url),
+      p.error ? el("p", { class: "error" }, "Fehler: " + p.error) : null,
+      !p.error && !p.images.length ? el("p", { class: "muted" }, "Keine Bilder gefunden.") : null,
+      p.images.length ? el("div", { class: "fields" },
+        el("input", { id: `t${idx}`, value: p.title || "", placeholder: "Titel", maxlength: "100" }),
+        el("input", { id: `d${idx}`, value: p.description || "", placeholder: "Beschreibung", maxlength: "800" })) : null,
+      grid));
+  });
+}
+
+function updateBar() {
+  $("selCount").textContent = `${selected.size} ausgewählt`;
+  $("bar").classList.toggle("show", selected.size > 0);
+}
+$("clearBtn").onclick = () => { selected.clear(); document.querySelectorAll(".tile.sel").forEach((t) => t.classList.remove("sel")); updateBar(); };
+
+async function submit(now) {
+  const board_id = $("board").value;
+  if (!board_id) return toast("Bitte oben rechts ein Board wählen.");
+  const items = [...selected.values()].map((s) => ({
+    image_url: s.image_url, link: s.link,
+    title: $(`t${s.pageIdx}`)?.value, description: $(`d${s.pageIdx}`)?.value,
+  }));
+  $("nowBtn").disabled = $("queueBtn").disabled = true;
+  try {
+    const r = await api("/api/queue", { items, board_id, now });
+    if (now) {
+      const ok = r.results.filter((x) => x.ok).length, fail = r.results.find((x) => !x.ok);
+      toast((ok ? "Pin erstellt." : "") + (fail ? " " + fail.error : "") + (r.added > 1 ? ` ${r.added - 1} weitere liegen in der Warteschlange.` : "") || "Bereits vorgemerkt.");
+    } else toast(`${r.added} Bild(er) in die Warteschlange gelegt.`);
+    $("clearBtn").onclick();
+  } catch (e) { toast(e.message); }
+  finally { $("nowBtn").disabled = $("queueBtn").disabled = false; refreshAll(); }
+}
+$("queueBtn").onclick = () => submit(false);
+$("nowBtn").onclick = () => submit(true);
+
+refreshAll();
+setInterval(refreshAll, 5000);
+</script>
+</body>
+</html>
