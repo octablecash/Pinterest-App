@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Datenschutzerklärung</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1a1a1a; --muted: #666; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121212; --fg: #f2f2f2; --muted: #aaa; }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 32px 20px;
+    padding-top: calc(32px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  .updated { color: var(--muted); font-size: 0.85rem; margin-bottom: 32px; }
+  h2 { font-size: 1.1rem; margin-top: 28px; }
+  p { color: var(--muted); }
+</style>
+</head>
+<body>
+  <h1>Datenschutzerklärung</h1>
+  <div class="updated">Stand: September 2026</div>
+
+  <h2>1. Verantwortlicher</h2>
+  <p>Diese Anwendung ist ein privates, nicht-kommerzielles Tool zur persönlichen Organisation von Design-Recherche über die Pinterest-API. Es wird ausschließlich vom Kontoinhaber selbst genutzt.</p>
+
+  <h2>2. Welche Daten verarbeitet werden</h2>
+  <p>Die Anwendung greift ausschließlich auf die Pins und Pinnwände des eigenen, authentifizierten Pinterest-Kontos zu. Es werden keine Daten von anderen Pinterest-Nutzer*innen gelesen, gespeichert oder weitergegeben.</p>
+
+  <h2>3. Zweck der Verarbeitung</h2>
+  <p>Die verarbeiteten Daten (Bild-URLs, Board-Zuordnungen) dienen ausschließlich dem automatisierten Erstellen eigener Pins auf eigenen Pinnwänden.</p>
+
+  <h2>4. Weitergabe an Dritte</h2>
+  <p>Es findet keine Weitergabe von Daten an Dritte statt. Die Kommunikation erfolgt ausschließlich zwischen dieser Anwendung und der offiziellen Pinterest-API.</p>
+
+  <h2>5. Speicherung</h2>
+  <p>Zugangsdaten (OAuth-Token) werden lokal beim Kontoinhaber gespeichert und nicht an Dritte übermittelt.</p>
+
+  <h2>6. Kontakt</h2>
+  <p>Bei Fragen zu dieser Datenschutzerklärung wende dich an den Kontoinhaber direkt.</p>
+</body>
+</html>
